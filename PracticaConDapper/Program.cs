@@ -1,5 +1,12 @@
 
 using PracticaConDapper.Extensions;
+using System.Data.SqlClient;
+using System.Data;
+using Scrutor;
+using Contract.Interfacees;
+using System.Reflection;
+using Contract.Repositorios;
+
 
 namespace PracticaConDapper
 {
@@ -13,8 +20,18 @@ namespace PracticaConDapper
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddTransient<IDbConnection>(sp =>
+                    new SqlConnection(builder.Configuration.GetConnectionString("ConnexionDapper")));
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.Scan(scan => scan
+                            .FromAssemblyOf<HeroeRepositorio>()
+                            .AddClasses()
+                            .AsMatchingInterface()
+                            .WithScopedLifetime()
+
+            );
 
             var app = builder.Build();
 

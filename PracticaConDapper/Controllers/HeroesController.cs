@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Contract.Interfacees;
+using Contract.Requests;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model;
 using Sienra.Exceptions;
@@ -10,23 +12,36 @@ namespace PracticaConDapper.Controllers
     [ApiController]
     public class HeroesController : ControllerBase
     {
-        [HttpGet]
-        public ActionResult GetHeroe(int id)
+        public readonly IHeroeRepositorio _heroeRepositorio;
+
+        public HeroesController(IHeroeRepositorio heroeRepositorio)
         {
-            var heroes = new List<Heroe>()
-            {
-                new Heroe() { Id = 1, Name ="SpiderMan" },
-                new Heroe() { Id = 2, Name ="Hulk" },
-                new Heroe() { Id = 3, Name ="Thor" }
-            };
+            _heroeRepositorio = heroeRepositorio;
+        }
 
 
-            var hero = heroes.FirstOrDefault(x => x.Id == id);
+        [HttpGet]
+        public async Task<IActionResult> ObtenerHeroe(int idHeroe) 
+        {
+            return Ok(await _heroeRepositorio.ObtenerHeroe(idHeroe));
+        }
 
-            if (hero == null)
-                 throw new NotFoundException(id);
+        [HttpGet("all")]
+        public async Task<IActionResult> ObtenerTodosLosHeroes()
+        {
+            return Ok(await _heroeRepositorio.ObtenerTodosLosHeroes());
+        }
 
-            return Ok(hero);
+        [HttpPost]
+        public async Task<IActionResult> CrearHeroe(HeroeRequest request)
+        {
+            return Ok(await _heroeRepositorio.CrearHeroe(request));
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> BorrarHeroe(int idHeroe)
+        {
+            return Ok(await _heroeRepositorio.BorrarHeroe(idHeroe));
         }
     }
 }

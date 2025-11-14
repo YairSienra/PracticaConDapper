@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.66" />
+    <PackageReference Include="Sienra" Version="1.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Contract\Contract.csproj" />
     <ProjectReference Include="..\Data\Data.csproj" />
   </ItemGroup>
