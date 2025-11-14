@@ -1,4 +1,6 @@
 
+using PracticaConDapper.Extensions;
+
 namespace PracticaConDapper
 {
     public class Program
@@ -16,6 +18,7 @@ namespace PracticaConDapper
 
             var app = builder.Build();
 
+            app.UseSienraCustomMiddleWare();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
