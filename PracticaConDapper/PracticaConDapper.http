@@ -1,0 +1,6 @@
+@PracticaConDapper_HostAddress = http://localhost:5276
+
+GET {{PracticaConDapper_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
