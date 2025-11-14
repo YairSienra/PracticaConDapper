@@ -33,7 +33,8 @@ namespace Contract.Repositorios
 
         public async Task<bool> BorrarHeroe(int idHeroe)
         {
-            var query = "Delete From Heroe Where IdHeroe = @idHeroe";
+            var query = $"Update Heroe set Activo = {Convert.ToInt32(false)} Where IdHeroe = @idHeroe";
+
             return await _db.ExecuteAsync(query, new { @idHeroe =  idHeroe}) > 0;
         }
 
